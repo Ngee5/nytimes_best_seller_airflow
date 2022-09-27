@@ -28,4 +28,8 @@ run_etl = PythonOperator(
     dag=dag
 )
 
-run_etl
+if run_etl > 1:
+    print("Report is Updated with the New Best Sellers.")
+else:
+    print("Report is not updated as the data is not updated.")
+    
