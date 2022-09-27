@@ -22,12 +22,37 @@ for book in books:
 
 data = r.json()
 data_convert = json.dumps(data)
-print(data_convert)
+# print(data_convert)
+
+#use pandas to read the json file & add column names
+times = pd.read_json(data_convert)
+times.columns = ['data_type','status','copyright','last_modified','results']
+times['last_modified'] = pd.to_datetime(times['last_modified']).dt.tz_convert(None)
+times['today'] = datetime.datetime.now()
+# print(days_convert)
+
+times['days_diff'] = times['today'].dt.date - times['last_modified'].dt.date
+
+times['days_diff'] = times['days_diff'].dt.days.astype('int16')
+
+success = 0
+for time in times['days_diff']:
+    if int(time) > 7:
+        success += 1
+    else:
+        success = 1
+
+print(success)
+
+
+
+# print(last_modified)
+    
 
 # json_df = pd.read_json(data)
 # print(json_df.to_string())
 
-print(r.json())
+# print(r.json())
 
 '''
 title = []
